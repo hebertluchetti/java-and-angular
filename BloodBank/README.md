@@ -72,7 +72,7 @@ http://localhost:8080/bloodbank-app/swagger-ui.html#
     
 You can test them using postman or any other rest client.
 
-**5. Install node modules for angular application (spentfront)**
+**5. Install node modules for angular application (blood-bank)**
 
 ```bash
 npm install
