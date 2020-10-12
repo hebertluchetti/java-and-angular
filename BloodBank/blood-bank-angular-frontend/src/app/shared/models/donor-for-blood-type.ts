@@ -1,4 +1,4 @@
-export class DonatorForBloodType {
+export class DonorForBloodType {
     quantity: number;
     bloodType: string;
 }

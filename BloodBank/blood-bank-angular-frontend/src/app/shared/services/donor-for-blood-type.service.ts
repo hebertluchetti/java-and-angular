@@ -2,18 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DonatorByState } from '../models/donator-by-state';
+import { DonorForBloodType } from '../models/donor-for-blood-type';
 import { environment } from '../../../environments/environment';
-
 
 @Injectable({
   providedIn: 'root'
 })
-
-export class DonatorByStateService {
+export class DonorForBloodTypeService {
 
   baseUrl = environment.baseUrl;
-  donatorsUrl = this.baseUrl+environment.donatorsUrl;
+  donorsUrl = this.baseUrl+environment.donorsUrl;
  
   httpOptions = {
     headers: new HttpHeaders({
@@ -23,9 +21,10 @@ export class DonatorByStateService {
 
   constructor(private http: HttpClient) { }
 
-  getDonatorsByState(): Observable<DonatorByState[]> {
-    return this.http.get<DonatorByState[]>(`${this.donatorsUrl}`+'/quant-by-state').pipe(
+  getDonorsForBloodType(): Observable<DonorForBloodType[]> {
+    return this.http.get<DonorForBloodType[]>(`${this.donorsUrl}`+'/quant-for-each-blood-type').pipe(
       map(response => response)
     )
   }
+
 }

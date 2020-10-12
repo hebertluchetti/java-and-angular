@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 export class AgeAvgByBloodTypeService {
 
   baseUrl = environment.baseUrl;
-  donatorsUrl = this.baseUrl+environment.donatorsUrl;
+  donorsUrl = this.baseUrl+environment.donorsUrl;
  
   httpOptions = {
     headers: new HttpHeaders({
@@ -22,7 +22,7 @@ export class AgeAvgByBloodTypeService {
   constructor(private http: HttpClient) {}
 
   getAgeAvgByBloodTypes(): Observable<AgeAvgByBloodType[]> {
-    return this.http.get<AgeAvgByBloodType[]>(`${this.donatorsUrl}`+'/age-avg-by-blood-type').pipe(
+    return this.http.get<AgeAvgByBloodType[]>(`${this.donorsUrl}`+'/age-avg-by-blood-type').pipe(
       map(response => response)
     )
   }

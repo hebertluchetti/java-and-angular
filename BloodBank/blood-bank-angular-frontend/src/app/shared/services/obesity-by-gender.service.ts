@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 export class ObesityByGenderService {
 
   baseUrl = environment.baseUrl;
-  donatorsUrl = this.baseUrl+environment.donatorsUrl;
+  donorsUrl = this.baseUrl+environment.donorsUrl;
  
   httpOptions = {
     headers: new HttpHeaders({
@@ -21,7 +21,7 @@ export class ObesityByGenderService {
 
   constructor(private http: HttpClient) {}
   getObesityByGender(): Observable<ObesityByGender[]> {
-    return this.http.get<ObesityByGender[]>(`${this.donatorsUrl}`+'/obesity-by-gender').pipe(
+    return this.http.get<ObesityByGender[]>(`${this.donorsUrl}`+'/obesity-by-gender').pipe(
       map(response => response)
     )
   }

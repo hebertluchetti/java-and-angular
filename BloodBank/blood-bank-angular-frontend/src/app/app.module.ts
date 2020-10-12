@@ -11,22 +11,22 @@ import {MatIconModule} from '@angular/material/icon';
 import { BloodDashboardComponent } from './views/home/blood-dashboard/blood-dashboard.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
-import { DonatorByStateComponent } from './views/home/blood-dashboard/donator-by-state/donator-by-state.component';
+import { DonorByStateComponent } from './views/home/blood-dashboard/donor-by-state/donor-by-state.component';
 import { AgeAvgByBloodTypeComponent } from './views/home/blood-dashboard/age-avg-by-blood-type/age-avg-by-blood-type.component';
 import { ImcAvgByAgeRangeComponent } from './views/home/blood-dashboard/imc-avg-by-age-range/imc-avg-by-age-range.component';
 import { ObesityByGenderComponent } from './views/home/blood-dashboard/obesity-by-gender/obesity-by-gender.component';
-import { DonatorForBloodTypeComponent } from './views/home/blood-dashboard/donator-for-blood-type/donator-for-blood-type.component';
+import { DonorForBloodTypeComponent } from './views/home/blood-dashboard/donor-for-blood-type/donor-for-blood-type.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     BloodDashboardComponent,
-    DonatorByStateComponent,
+    DonorByStateComponent,
     AgeAvgByBloodTypeComponent,
     ImcAvgByAgeRangeComponent,
     ObesityByGenderComponent,
-    DonatorForBloodTypeComponent
+    DonorForBloodTypeComponent
   ],
   imports: [
     BrowserModule,

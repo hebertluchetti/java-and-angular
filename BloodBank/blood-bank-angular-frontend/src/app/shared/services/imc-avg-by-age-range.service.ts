@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 export class ImcAvgByAgeRangeService {
 
   baseUrl = environment.baseUrl;
-  donatorsUrl = this.baseUrl+environment.donatorsUrl;
+  donorsUrl = this.baseUrl+environment.donorsUrl;
  
   httpOptions = {
     headers: new HttpHeaders({
@@ -22,7 +22,7 @@ export class ImcAvgByAgeRangeService {
   constructor(private http: HttpClient) {}
 
   getImcAvgByAgeRanges(): Observable<ImcAvgByAgeRange[]> {
-    return this.http.get<ImcAvgByAgeRange[]>(`${this.donatorsUrl}`+'/imc-avg-by-age-range').pipe(
+    return this.http.get<ImcAvgByAgeRange[]>(`${this.donorsUrl}`+'/imc-avg-by-age-range').pipe(
       map(response => response)
     )
   }
