@@ -1,0 +1,32 @@
+<mat-tab-group mat-align-tabs="start" style="padding-top: 20px; padding-left: 2%; padding-right: 2%;">
+    <mat-tab label="Doadores/Estado">
+        <div *ngIf="dataIsReady" fxLayout="row wrap" f1q  xLayoutAlign="start center" style="padding: 2%">
+            <app-donator-by-state></app-donator-by-state>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Doadores/Tipo Sanguíneo">
+        <div *ngIf="dataIsReady" fxLayout="row wrap" f1q  xLayoutAlign="start center" style="padding: 2%">
+            <app-donator-for-blood-type></app-donator-for-blood-type>
+        </div>
+    </mat-tab>
+    
+    <mat-tab label="Média Idade/Tipo Sanguíneo">
+        <div *ngIf="dataIsReady" fxLayout="row wrap" f1q  xLayoutAlign="start center" style="padding: 2%">
+            <app-age-avg-by-blood-type></app-age-avg-by-blood-type>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Média IMC/Faixa Idade">
+        <div *ngIf="dataIsReady" fxLayout="row wrap" f1q  xLayoutAlign="start center" style="padding: 2%">
+            <app-imc-avg-by-age-range></app-imc-avg-by-age-range>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Obesidade/Gênero">
+        <div *ngIf="dataIsReady" fxLayout="row wrap" f1q  xLayoutAlign="start center" style="padding: 2%">
+            <app-obesity-by-gender></app-obesity-by-gender>
+        </div>
+    </mat-tab>
+
+</mat-tab-group>

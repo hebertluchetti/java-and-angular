@@ -1,0 +1,25 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+      <h2>{{titleLabel}}</h2>
+    </div>
+    <div class="panel-body">
+      <div class="example-container mat-elevation-z8">
+        <table mat-table [dataSource]="imcAvgByAgeRangeList" matSort>
+          <!-- Faixa de Idade Column -->
+          <ng-container matColumnDef="ageRange">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ageRangeLabel}} </th>
+            <td mat-cell *matCellDef="let item"> {{item.ageRange}} </td>
+          </ng-container>
+  
+          <!-- IMC Average Column -->
+          <ng-container matColumnDef="imcAvg">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{imcAvgLabel}} </th>
+            <td mat-cell *matCellDef="let item"> {{item.imcAvg | number : '1.2-2'}} </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
