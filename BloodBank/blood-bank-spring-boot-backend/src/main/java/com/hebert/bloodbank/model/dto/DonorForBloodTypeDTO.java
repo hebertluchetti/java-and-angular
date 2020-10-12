@@ -13,7 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class DonatorQuantityByStateDTO {
-	private String state;
-	private BigDecimal quantity;
+public class DonorForBloodTypeDTO {
+	private String bloodType;
+	private BigDecimal quantity;	
 }

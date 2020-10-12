@@ -35,13 +35,6 @@ public class ExceptionHandlerControllerAdvice {
 		return createExceptionResponse(ex, request) ;
 	}
 	
-	@ExceptionHandler(PlaylistVideoNotFoundException.class)
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST) // 400
-	public @ResponseBody ExceptionResponse handlePlaylistVideoNotFound(final PlaylistVideoNotFoundException ex, final HttpServletRequest request) {
-		return createExceptionResponse(ex, request) ;
-	}
-	
-	
 	private ExceptionResponse createExceptionResponse(Exception ex, HttpServletRequest request) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse();
 		exceptionResponse.setMessage(ex.getLocalizedMessage());

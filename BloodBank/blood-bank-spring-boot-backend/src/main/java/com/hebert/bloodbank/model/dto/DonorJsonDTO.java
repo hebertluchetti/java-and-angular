@@ -11,7 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class DonatorJsonDTO {
+public class DonorJsonDTO {
 	private String nome;
 	private String cpf;
 	private String rg;

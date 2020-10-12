@@ -13,7 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class DonatorImcAvgByAgeRangeDTO {
-	private String ageRange;
-	private BigDecimal imcAvg;
+public class DonorQuantityByStateDTO {
+	private String state;
+	private BigDecimal quantity;
 }

@@ -14,22 +14,22 @@ import com.hebert.bloodbank.enums.BloodTypes;
 import com.hebert.bloodbank.enums.GenderTypes;
 import com.hebert.bloodbank.model.Address;
 import com.hebert.bloodbank.model.City;
-import com.hebert.bloodbank.model.Donator;
+import com.hebert.bloodbank.model.Donor;
 import com.hebert.bloodbank.model.State;
-import com.hebert.bloodbank.repository.DonatorRepository;
+import com.hebert.bloodbank.repository.DonorRepository;
 
 @Service
-public class DonatorServiceImpl implements DonatorService {
+public class DonorServiceImpl implements DonorService {
 	private static final long serialVersionUID = -1603925162191880597L;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(DonatorServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DonorServiceImpl.class);
 	
-	private DonatorRepository repository;
+	private DonorRepository repository;
 	private StateService stateService;
 	private CityService cityService;
 	private AddressService addressService;
 	
-	public DonatorServiceImpl(DonatorRepository repository, StateServiceImpl stateService, CityServiceImpl cityService, AddressServiceImpl addressService) {
+	public DonorServiceImpl(DonorRepository repository, StateServiceImpl stateService, CityServiceImpl cityService, AddressServiceImpl addressService) {
 		this.stateService = stateService;
 		this.cityService = cityService;
 		this.addressService = addressService;
@@ -37,41 +37,41 @@ public class DonatorServiceImpl implements DonatorService {
 	}
 
 	@Override
-	public List<Donator> findAll() {
+	public List<Donor> findAll() {
 		return repository.findAll();
 	}
 
 	@Override
-	public Optional<Donator> findById(Long id) {
+	public Optional<Donor> findById(Long id) {
 		return repository.findById(id);
 	}
 
 	@Override
-	public Donator save(Donator entity) {
+	public Donor save(Donor entity) {
 		return saveDonator(entity);
 	}
 	
 	@Override
-	public void delete(Donator entity) {
+	public void delete(Donor entity) {
 		repository.delete(entity);
 	}
 	
 	@Transactional
 	@Override
-	public void polulateAll(List<Donator> entities) {
+	public void polulateAll(List<Donor> entities) {
 		repository.saveAll(entities);	
 	}
 
 	@Transactional
 	@Override
-	public Donator getEntity(String name, String cpf, String identity, String email, GenderTypes gender,
+	public Donor getEntity(String name, String cpf, String identity, String email, GenderTypes gender,
 			BloodTypes bloodType, BigDecimal weight, BigDecimal height, String father, String mother, LocalDate birthDate,
 			Address address) {
-		Donator donator = new Donator(name, cpf, identity, email, gender, bloodType, weight, height, father, mother, birthDate, address);	
+		Donor donator = new Donor(name, cpf, identity, email, gender, bloodType, weight, height, father, mother, birthDate, address);	
 		return repository.save(donator);
 	}
 	
-	private Donator saveDonator(Donator donator) {			
+	private Donor saveDonator(Donor donator) {			
 		LOGGER.info("Inserting a donator {}", donator);
       	
 		Address address = donator.getAddress();

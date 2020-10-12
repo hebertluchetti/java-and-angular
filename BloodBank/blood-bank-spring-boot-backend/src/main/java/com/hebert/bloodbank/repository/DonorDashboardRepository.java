@@ -12,50 +12,50 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.hebert.bloodbank.model.dto.DonatorAgeAvgByBloodTypeDTO;
-import com.hebert.bloodbank.model.dto.DonatorImcAvgByAgeRangeDTO;
-import com.hebert.bloodbank.model.dto.DonatorImcPercentageByGenderDTO;
-import com.hebert.bloodbank.model.dto.DonatorQuantityByBloodTypeDTO;
-import com.hebert.bloodbank.model.dto.DonatorQuantityByStateDTO;
-import com.hebert.bloodbank.model.dto.DonatorForBloodTypeDTO;
-import com.hebert.bloodbank.repository.mapper.DonatorAgeAvgByBloodTypeDTOMapper;
-import com.hebert.bloodbank.repository.mapper.DonatorByBloodTypeDTOMapper;
-import com.hebert.bloodbank.repository.mapper.DonatorByStateDTOMapper;
-import com.hebert.bloodbank.repository.mapper.DonatorFromByBloodTypeDTOMapper;
-import com.hebert.bloodbank.repository.mapper.DonatorImcAvgByAgeRangeDTOMapper;
-import com.hebert.bloodbank.repository.mapper.DonatorGenderPercentageByImcDTOMapper;
+import com.hebert.bloodbank.model.dto.DonorAgeAvgByBloodTypeDTO;
+import com.hebert.bloodbank.model.dto.DonorImcAvgByAgeRangeDTO;
+import com.hebert.bloodbank.model.dto.DonorImcPercentageByGenderDTO;
+import com.hebert.bloodbank.model.dto.DonorQuantityByBloodTypeDTO;
+import com.hebert.bloodbank.model.dto.DonorQuantityByStateDTO;
+import com.hebert.bloodbank.model.dto.DonorForBloodTypeDTO;
+import com.hebert.bloodbank.repository.mapper.DonorAgeAvgByBloodTypeDTOMapper;
+import com.hebert.bloodbank.repository.mapper.DonorByBloodTypeDTOMapper;
+import com.hebert.bloodbank.repository.mapper.DonorByStateDTOMapper;
+import com.hebert.bloodbank.repository.mapper.DonorFromByBloodTypeDTOMapper;
+import com.hebert.bloodbank.repository.mapper.DonorImcAvgByAgeRangeDTOMapper;
+import com.hebert.bloodbank.repository.mapper.DonorGenderPercentageByImcDTOMapper;
 
 @Repository
-public class DonatorDashboardRepository {
-	private static final Logger LOGGER = LoggerFactory.getLogger(DonatorDashboardRepository.class);
+public class DonorDashboardRepository {
+	private static final Logger LOGGER = LoggerFactory.getLogger(DonorDashboardRepository.class);
 	
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	 
-	public DonatorDashboardRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+	public DonorDashboardRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
 		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate; 
 	}
 	 
-	 private final String SQL_DONATORS_BY_STATE = "/** DonatorDashboardRepository.findDonatorsByState **/"+
+	 private final String SQL_DONATORS_BY_STATE = "/** DonorDashboardRepository.findDonorsByState **/"+
 	 		" SELECT s.name as state, count(*) as quant " + 
-	 		"  FROM bloodbankdb.donator d " + 
+	 		"  FROM bloodbankdb.donor d " + 
 	 		"	join bloodbankdb.address a on (d.address_id = a.id) " + 
 	 		"	join bloodbankdb.city c on (a.city_id = c.id) " + 
 	 		"	join bloodbankdb.state s on (c.state_id = s.id) " + 
 	 		" GROUP BY s.id  " + 
 	 		" ORDER BY s.name";
 		 
-	 private final String SQL_AGE_AVG_BY_BLOOD_TYPE_ = "/** DonatorDashboardRepository.findAgeAvgByBloodType **/"+
+	 private final String SQL_AGE_AVG_BY_BLOOD_TYPE_ = "/** DonorDashboardRepository.findAgeAvgByBloodType **/"+
 			 "SELECT d.blood_type, avg((YEAR(CURDATE())-YEAR(d.birth_date)) ) as age_avg " + 
-	 		"  FROM bloodbankdb.donator as d " + 
+	 		"  FROM bloodbankdb.donor as d " + 
 	 		" GROUP BY d.blood_type ";
 	 
-	 private final String SQL_DONATORS_BY_BLOOD_TYPE = "/** DonatorDashboardRepository.findDonatorsByBloodType **/"+
+	 private final String SQL_DONATORS_BY_BLOOD_TYPE = "/** DonorDashboardRepository.findDonorsByBloodType **/"+
 		 		" SELECT  d.blood_type as blood_type, count(*) as quant " + 
-		 		"  FROM bloodbankdb.donator d " + 
+		 		"  FROM bloodbankdb.donor d " + 
 		 		" GROUP BY d.blood_type " + 
 		 		" ORDER BY quant";
 	 
-	 private final String SQL_IMC_AVG_BY_AGE_RANGE = "/** DonatorDashboardRepository.findDonatorImcAvgByAgeRange **/"+
+	 private final String SQL_IMC_AVG_BY_AGE_RANGE = "/** DonorDashboardRepository.findDonorImcAvgByAgeRange **/"+
 	 " SELECT AVG(d.weight/(d.height*d.height)) AS imc_avg, " + 
 	 "		CASE  " + 
 	 "			WHEN (YEAR(CURDATE())-YEAR(d.birth_date)) BETWEEN 0 and 10 THEN '0-10' " + 
@@ -71,27 +71,27 @@ public class DonatorDashboardRepository {
 	 "			WHEN (YEAR(CURDATE())-YEAR(d.birth_date)) BETWEEN 101 and 110 THEN '101-110' " + 
 	 "			WHEN (YEAR(CURDATE())-YEAR(d.birth_date)) BETWEEN 111 and 120 THEN '111-120' " + 
 	 "      END AS age_range " + 
-	 "  FROM bloodbankdb.donator d " + 
+	 "  FROM bloodbankdb.donor d " + 
 	 " GROUP BY age_range " + 
 	 " ORDER BY age_range";
 	 
-	 private final String SQL_IMC_PERCENT_BY_GENDER = "/** DonatorDashboardRepository.findDonatorGenderPercentageByImc **/"+
+	 private final String SQL_IMC_PERCENT_BY_GENDER = "/** DonorDashboardRepository.findDonorGenderPercentageByImc **/"+
 	 		" SELECT count(dg.id) / t.total * 100 AS percentage, " + 
 	 		"		 dg.gender AS gender " + 
-	 		"  FROM bloodbankdb.donator dg, " + 
+	 		"  FROM bloodbankdb.donor dg, " + 
 	 		"		( SELECT count(*) as total " + 
-	 		"		   FROM bloodbankdb.donator d ) t " + 
+	 		"		   FROM bloodbankdb.donor d ) t " + 
 	 		" WHERE dg.weight/(dg.height*dg.height) > :imcValue " + 
 	 		" GROUP BY dg.gender ";
 	 
-	 private final String SQL_DONATORS_FOR_EACH_BLOOD_TYPE = "/** DonatorDashboardRepository.findDonatorsFromByBloodType **/"+
+	 private final String SQL_DONATORS_FOR_EACH_BLOOD_TYPE = "/** DonorDashboardRepository.findDonorsFromByBloodType **/"+
 	 		" WITH bloodtypes AS ( " + 
 	 		"	SELECT distinct dg.blood_type " + 
-	 		"	 FROM bloodbankdb.donator dg	 " + 
+	 		"	 FROM bloodbankdb.donor dg	 " + 
 	 		" ) " + 
 	 		" SELECT count(*) AS quant,  " + 
 	 		"		 btypes.blood_type  " + 
-	 		"  FROM bloodbankdb.donator dg, " + 
+	 		"  FROM bloodbankdb.donor dg, " + 
 	 		" 		bloodtypes btypes " + 
 	 		" WHERE dg.weight > :minWeight  " + 
 	 		"	   AND (YEAR(CURDATE())-YEAR(dg.birth_date)) BETWEEN :minAge and :maxAge " + 
@@ -110,68 +110,68 @@ public class DonatorDashboardRepository {
 	 		"GROUP BY btypes.blood_type " + 
 	 		"ORDER BY btypes.blood_type; ";
 		 
-	 public List<DonatorQuantityByStateDTO> findDonatorQuantityByState()  {
-	        RowMapper<DonatorQuantityByStateDTO> rowMapper = new DonatorByStateDTOMapper();
-	        List<DonatorQuantityByStateDTO> list = new ArrayList<DonatorQuantityByStateDTO>();
+	 public List<DonorQuantityByStateDTO> findDonorQuantityByState()  {
+	        RowMapper<DonorQuantityByStateDTO> rowMapper = new DonorByStateDTOMapper();
+	        List<DonorQuantityByStateDTO> list = new ArrayList<DonorQuantityByStateDTO>();
 	        Map<String, Object> paramMap = new HashMap<String, Object>();
 	        
-	        LOGGER.info("[findDonatorQuantityByState] Generating the query");
+	        LOGGER.info("[findDonorQuantityByState] Generating the query");
 	        list = namedParameterJdbcTemplate.query(SQL_DONATORS_BY_STATE, paramMap, rowMapper);
-	        LOGGER.info("[findDonatorQuantityByState] Finished");
+	        LOGGER.info("[findDonorQuantityByState] Finished");
 
 	        return list;
 	 }
 	  
-	 public List<DonatorAgeAvgByBloodTypeDTO> findDonatorAgeAvgByBloodType()  {
-	        RowMapper<DonatorAgeAvgByBloodTypeDTO> rowMapper = new DonatorAgeAvgByBloodTypeDTOMapper();
-	        List<DonatorAgeAvgByBloodTypeDTO> list = new ArrayList<DonatorAgeAvgByBloodTypeDTO>();
+	 public List<DonorAgeAvgByBloodTypeDTO> findDonorAgeAvgByBloodType()  {
+	        RowMapper<DonorAgeAvgByBloodTypeDTO> rowMapper = new DonorAgeAvgByBloodTypeDTOMapper();
+	        List<DonorAgeAvgByBloodTypeDTO> list = new ArrayList<DonorAgeAvgByBloodTypeDTO>();
 	        Map<String, Object> paramMap = new HashMap<String, Object>();
 	        
-	        LOGGER.info("[findDonatorAgeAvgByBloodType] Generating the query");
+	        LOGGER.info("[findDonorAgeAvgByBloodType] Generating the query");
 	        list = namedParameterJdbcTemplate.query(SQL_AGE_AVG_BY_BLOOD_TYPE_, paramMap, rowMapper);
-	        LOGGER.info("[findDonatorAgeAvgByBloodType] Finished");
+	        LOGGER.info("[findDonorAgeAvgByBloodType] Finished");
 
 	        return list;
 	  }
 	 
-	 public List<DonatorImcAvgByAgeRangeDTO> findDonatorImcAvgByAgeRange()  {
-	        RowMapper<DonatorImcAvgByAgeRangeDTO> rowMapper = new DonatorImcAvgByAgeRangeDTOMapper();
-	        List<DonatorImcAvgByAgeRangeDTO> list = new ArrayList<DonatorImcAvgByAgeRangeDTO>();
+	 public List<DonorImcAvgByAgeRangeDTO> findDonorImcAvgByAgeRange()  {
+	        RowMapper<DonorImcAvgByAgeRangeDTO> rowMapper = new DonorImcAvgByAgeRangeDTOMapper();
+	        List<DonorImcAvgByAgeRangeDTO> list = new ArrayList<DonorImcAvgByAgeRangeDTO>();
 	        Map<String, Object> paramMap = new HashMap<String, Object>();
 	        
-	        LOGGER.info("[findDonatorImcAvgByAgeRange] Generating the query");
+	        LOGGER.info("[findDonorImcAvgByAgeRange] Generating the query");
 	        list = namedParameterJdbcTemplate.query(SQL_IMC_AVG_BY_AGE_RANGE, paramMap, rowMapper);
-	        LOGGER.info("[findDonatorImcAvgByAgeRange] Finished");
+	        LOGGER.info("[findDonorImcAvgByAgeRange] Finished");
 
 	        return list;
 	  }
 	 
-	 public List<DonatorQuantityByBloodTypeDTO> findDonatorQuantityByBloodType()  {
-	        RowMapper<DonatorQuantityByBloodTypeDTO> rowMapper = new DonatorByBloodTypeDTOMapper();
-	        List<DonatorQuantityByBloodTypeDTO> list = new ArrayList<DonatorQuantityByBloodTypeDTO>();
+	 public List<DonorQuantityByBloodTypeDTO> findDonorQuantityByBloodType()  {
+	        RowMapper<DonorQuantityByBloodTypeDTO> rowMapper = new DonorByBloodTypeDTOMapper();
+	        List<DonorQuantityByBloodTypeDTO> list = new ArrayList<DonorQuantityByBloodTypeDTO>();
 	        Map<String, Object> paramMap = new HashMap<String, Object>();
 	        
-	        LOGGER.info("[findDonatorQuantityByBloodType] Generating the query");
+	        LOGGER.info("[findDonorQuantityByBloodType] Generating the query");
 	        list = namedParameterJdbcTemplate.query(SQL_DONATORS_BY_BLOOD_TYPE, paramMap, rowMapper);
-	        LOGGER.info("[findDonatorQuantityByBloodType] Finished");
+	        LOGGER.info("[findDonorQuantityByBloodType] Finished");
 
 	        return list;
 	  }
 	  
-	 public List<DonatorImcPercentageByGenderDTO> findDonatorImcPercentageByGender(BigDecimal imc)  {
-	        RowMapper<DonatorImcPercentageByGenderDTO> rowMapper = new DonatorGenderPercentageByImcDTOMapper();
-	        List<DonatorImcPercentageByGenderDTO> list = new ArrayList<DonatorImcPercentageByGenderDTO>();
+	 public List<DonorImcPercentageByGenderDTO> findDonorImcPercentageByGender(BigDecimal imc)  {
+	        RowMapper<DonorImcPercentageByGenderDTO> rowMapper = new DonorGenderPercentageByImcDTOMapper();
+	        List<DonorImcPercentageByGenderDTO> list = new ArrayList<DonorImcPercentageByGenderDTO>();
 	        Map<String, Object> paramMap = new HashMap<String, Object>();
 	        paramMap.put("imcValue", imc);
 	        
-	        LOGGER.info("[findDonatorImcPercentageByGender] Generating the query");
+	        LOGGER.info("[findDonorImcPercentageByGender] Generating the query");
 	        list = namedParameterJdbcTemplate.query(SQL_IMC_PERCENT_BY_GENDER, paramMap, rowMapper);
-	        LOGGER.info("[findDonatorImcPercentageByGender] Finished");
+	        LOGGER.info("[findDonorImcPercentageByGender] Finished");
 
 	        return list;
 	  }
 
-	 public List<DonatorForBloodTypeDTO> findDonatorsForEachBloodType (
+	 public List<DonorForBloodTypeDTO> findDonorsForEachBloodType (
 			 BigDecimal minWeight, 
 			 Integer minAge, 
 			 Integer maxAge,
@@ -184,8 +184,8 @@ public class DonatorDashboardRepository {
 			 List<Integer> fromOp,
 			 List<Integer> fromOn		 
 			 )  {
-	        RowMapper<DonatorForBloodTypeDTO> rowMapper = new DonatorFromByBloodTypeDTOMapper();
-	        List<DonatorForBloodTypeDTO> list = new ArrayList<DonatorForBloodTypeDTO>();
+	        RowMapper<DonorForBloodTypeDTO> rowMapper = new DonorFromByBloodTypeDTOMapper();
+	        List<DonorForBloodTypeDTO> list = new ArrayList<DonorForBloodTypeDTO>();
 	        Map<String, Object> paramMap = new HashMap<String, Object>();
 	        paramMap.put("minWeight", minWeight);
 	        paramMap.put("minAge", minAge);
@@ -199,9 +199,9 @@ public class DonatorDashboardRepository {
 	        paramMap.put("fromOp", fromOp);
 	        paramMap.put("fromOn", fromOn);
 	        
-	        LOGGER.info("[findDonatorsForEachBloodType] Generating the query");
+	        LOGGER.info("[findDonorsForEachBloodType] Generating the query");
 	        list = namedParameterJdbcTemplate.query(SQL_DONATORS_FOR_EACH_BLOOD_TYPE, paramMap, rowMapper);
-	        LOGGER.info("[findDonatorsForEachBloodType] Finished");
+	        LOGGER.info("[findDonorsForEachBloodType] Finished");
 
 	        return list;
 	  }

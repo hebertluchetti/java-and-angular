@@ -33,12 +33,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=true)
 @Entity
-@Table(name = "donator", uniqueConstraints = {@UniqueConstraint(columnNames = {"cpf", "identity"}, name = "uk_donator")})
-public class Donator extends GenericEntity  {
+@Table(name = "donor", uniqueConstraints = {@UniqueConstraint(columnNames = {"cpf", "identity"}, name = "uk_donor")})
+public class Donor extends GenericEntity  {
 
 	private static final long serialVersionUID = 4419788191957580617L;
 
-	@ApiModelProperty(value = "donator id")
+	@ApiModelProperty(value = "donor id")
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -80,12 +80,12 @@ public class Donator extends GenericEntity  {
 	@Enumerated(EnumType.ORDINAL)
     private BloodTypes bloodType = BloodTypes.O_POS;
     
-	@ApiModelProperty(value = "donator weight")
+	@ApiModelProperty(value = "donor weight")
     @NotNull(message ="weight has to be present")
     @Column(name = "weight", nullable = false)
     private BigDecimal weight = new BigDecimal(0.0);
     
-	@ApiModelProperty(value = "donator height")
+	@ApiModelProperty(value = "donor height")
     @NotNull(message ="height has to be present")
     @Column(name = "height", nullable = false)
     private BigDecimal height = new BigDecimal(0.0);
@@ -108,7 +108,7 @@ public class Donator extends GenericEntity  {
 	@JoinColumn(name="address_id")
 	private Address address;
 
-	public Donator(
+	public Donor(
 			@NotNull(message = "name has to be present") @NotEmpty(message = "name can not be empty") String name,
 			@NotNull(message = "cpf has to be present") @NotEmpty(message = "cpf can not be empty") String cpf,
 			@NotNull(message = "rg identity has to be present") @NotEmpty(message = "rg identity can not be empty") String identity,

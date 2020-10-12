@@ -18,9 +18,9 @@ import com.hebert.bloodbank.enums.BloodTypes;
 import com.hebert.bloodbank.enums.GenderTypes;
 import com.hebert.bloodbank.model.Address;
 import com.hebert.bloodbank.model.City;
-import com.hebert.bloodbank.model.Donator;
+import com.hebert.bloodbank.model.Donor;
 import com.hebert.bloodbank.model.State;
-import com.hebert.bloodbank.model.dto.DonatorJsonDTO;
+import com.hebert.bloodbank.model.dto.DonorJsonDTO;
 import com.hebert.bloodbank.reader.JsonRead;
 
 @Service
@@ -28,12 +28,12 @@ public class InitialDBLoadingService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(InitialDBLoadingService.class);
 	
-	private DonatorService donatorService;
+	private DonorService donatorService;
 	private StateService stateService;
 	private CityService cityService;
 	private AddressService addressService;
 	
-	public InitialDBLoadingService(DonatorServiceImpl donatorService, StateServiceImpl stateService, CityServiceImpl cityService, AddressServiceImpl addressService) {
+	public InitialDBLoadingService(DonorServiceImpl donatorService, StateServiceImpl stateService, CityServiceImpl cityService, AddressServiceImpl addressService) {
 		this.donatorService = donatorService;	
 		this.stateService = stateService;
 		this.cityService = cityService;
@@ -43,7 +43,7 @@ public class InitialDBLoadingService {
 	
 	private void initializeDB() {
 		String path = "./doc/data.json";
-		List<Donator> list = this.donatorService.findAll();		
+		List<Donor> list = this.donatorService.findAll();		
 		
 		if (Objects.isNull(list) || list.isEmpty()) {
 			LOGGER.info("Importing the donator JSON file {} ", path);
@@ -53,12 +53,12 @@ public class InitialDBLoadingService {
 	
 	private void polulateDonatorPersistence(String jsonFilePath) {
         try {
-        	List<DonatorJsonDTO> list = JsonRead.readListFrom(jsonFilePath);
+        	List<DonorJsonDTO> list = JsonRead.readListFrom(jsonFilePath);
         	LOGGER.info("The donator JSON file {} loaded successfully", jsonFilePath);	        	
         	//list.stream().forEach(item-> System.out.println(item.getData_nasc()));
         	polulatePersistence(list);	       			        	
         	//donators.stream().forEach(System.out::println);
-        	LOGGER.info("The Donator persistence was populated successfully");
+        	LOGGER.info("The Donor persistence was populated successfully");
         } catch (NoSuchFileException e) {
         	LOGGER.error("The json file was not found in directory {} ", jsonFilePath);
         } catch (IOException e) {
@@ -66,8 +66,8 @@ public class InitialDBLoadingService {
         }
     }
 	
-	private void polulatePersistence(List<DonatorJsonDTO> dtos) {		
-		for (DonatorJsonDTO item: dtos) {   
+	private void polulatePersistence(List<DonorJsonDTO> dtos) {		
+		for (DonorJsonDTO item: dtos) {   
     		LocalDate date = LocalDate.now();
     		String strDate = item.getData_nasc();
       		BigDecimal weight = new BigDecimal(item.getPeso());
@@ -140,19 +140,19 @@ public class InitialDBLoadingService {
 		return false;
 	}
 		
-	private Boolean polulateDonators(List<Donator> donators) {
-		List<Donator> list = this.donatorService.findAll();
+	private Boolean polulateDonators(List<Donor> donators) {
+		List<Donor> list = this.donatorService.findAll();
 		
 		if (Objects.isNull(list) || list.isEmpty()) {			
-			LOGGER.info("Populating the Donator persistence");
+			LOGGER.info("Populating the Donor persistence");
 			this.donatorService.polulateAll(donators);
 			return true;
 		}
-		LOGGER.error("The Donator persistence already exists");
+		LOGGER.error("The Donor persistence already exists");
 		return false;
 	}
 
-	private void polulateDonatorDB(Set<State> states, Set<City> cities, List<Address> addresses, List<Donator> donators) {		
+	private void polulateDonatorDB(Set<State> states, Set<City> cities, List<Address> addresses, List<Donor> donators) {		
 		Boolean success = polulateStateDB(states);
 		
 		if (success) {

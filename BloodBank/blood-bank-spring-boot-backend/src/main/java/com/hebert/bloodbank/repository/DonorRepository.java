@@ -3,8 +3,8 @@ package com.hebert.bloodbank.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.hebert.bloodbank.model.Donator;
+import com.hebert.bloodbank.model.Donor;
 
 @Repository
-public interface DonatorRepository extends JpaRepository<Donator, Long> { 
+public interface DonorRepository extends JpaRepository<Donor, Long> { 
 }
