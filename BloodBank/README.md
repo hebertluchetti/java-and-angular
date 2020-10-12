@@ -33,7 +33,7 @@ The application built with Angular 10 and Spring Boot that connects to the MySQL
 **1. Clone the application**
 
 ```bash
-git clone https://hebertlr@bitbucket.org/hebertlr/javaangular.git
+git clone https://github.com/hebertluchetti/java-and-angular
 ```
 
 **2. Create MySQL database**
@@ -82,12 +82,6 @@ npm install
 
 ```bash
 ng serve
-```
-
-Alternatively, you can run the below command to open the application in default web browser -
-
-```bash
-ng serve 
 ```
 
 Contact Hebert Luchetti Ribeiro
