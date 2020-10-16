@@ -89,6 +89,6 @@ Contact Hebert Luchetti Ribeiro
 email: hebert.luchetti@gmail.com
 linkedin: https://www.linkedin.com/in/hebert-luchetti-ribeiro-aa42923
 youtube: https://www.youtube.com/channel/UCf0w-raMzq6rNxxjNJ7D1gQ
-githun: https://github.com/hebertluchetti/PythonAndDeepLearning
+githun: https://github.com/hebertluchetti
 
 ```
